@@ -6,13 +6,13 @@
   </head>
   <body>
 
-    <button id="click-me-button" type="button" onclick="hackit.App().addMessage()">Click me!</button>
+    <button id="click-me-button" type="button">Click me!</button>
+
+    <canvas id="scene" width="500" height="300"></canvas>
 
     <!-- Include Scala.js compiled code -->
-    <script type="text/javascript" src="./target/scala-2.11/scala-js-tutorial-fastopt.js"></script>
-    <!-- Run tutorial.webapp.TutorialApp -->
-    <script type="text/javascript">
-      hackit.App().main();
-    </script>
+    <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-jsdeps.js"></script>
+    <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-fastopt.js"></script>
+    <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-launcher.js"></script>
   </body>
 </html>

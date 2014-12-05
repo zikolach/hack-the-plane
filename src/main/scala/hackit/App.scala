@@ -3,29 +3,35 @@ package hackit
 import java.util.Date
 
 import scala.scalajs.js.JSApp
-import org.scalajs.dom
-import dom.document
+import org.scalajs.jquery.jQuery
+import org.scalajs.dom._
 
-import scala.scalajs.js.annotation.JSExport
 
 object App extends JSApp {
 
   var counter = 0
 
-  def appendPar(targetNode: dom.Node, text: String): Unit = {
-    val parNode = document.createElement("p")
-    val textNode = document.createTextNode(text)
-    parNode.appendChild(textNode)
-    targetNode.appendChild(parNode)
+  def setupUI(): Unit = {
+    jQuery("body").append("<p>Hello World!!!</p>")
+    jQuery("#click-me-button").click(addMessage _)
   }
 
-  @JSExport
   def addMessage(): Unit = {
-    appendPar(document.body, counter.toString)
+    jQuery("body").append(s"<p>$counter</p>")
     counter = counter + 1
   }
 
+  var w: World = null
+
+  def render(): Unit = {
+    w.drawScene()
+  }
+
   def main(): Unit = {
-    appendPar(document.body, "Hello Zikolach")
+    jQuery(setupUI _)
+    w = new World("scene")
+    w.drawScene()
+    val timer = setInterval(render _, 100)
+    println(timer)
   }
 }
