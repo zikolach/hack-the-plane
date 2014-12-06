@@ -28,6 +28,7 @@ class World(canvasId: String) extends CollisionSpace {
       rocket.step()
       rocket.draw(ctx)
     })
+//    rockets = rockets.filterNot(_.destroyed)
   }
 
   override def toString = {

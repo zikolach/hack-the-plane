@@ -10,7 +10,7 @@ trait SpaceObject {
     val min2 = (dimensions._2 + anotherObject.dimensions._2) / 2
     dp1 < min1 && dp2 < min2
   }
-  def position: (Int, Int)
+  def position: (Double, Double)
   def dimensions: (Int, Int)
   def orientation: Double
 }

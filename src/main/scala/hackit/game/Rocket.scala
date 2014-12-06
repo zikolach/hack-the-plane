@@ -10,16 +10,17 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
   val maxRotation = 10
   val (w, h) = (20, 30)
 
-  var x: Int = 0
-  var y: Int = 0
+  var x: Double = 0
+  var y: Double = 0
   var angle: Double = 0
 
   var speed: Int = 0 // 0..100%
   var rotation: Int = 0 // -100%..100%
 
   var collision: Boolean = false
+  var destroyed: Boolean = false
 
-  def this(x: Int, y: Int, angle: Int, pilot: Pilot, space: CollisionSpace) = {
+  def this(x: Int, y: Int, angle: Double, pilot: Pilot, space: CollisionSpace) = {
     this(pilot, space)
     this.x = x
     this.y = y
@@ -45,11 +46,9 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
 //    val canvas = ctx.canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.translate(x, y)
-    ctx.rotate(Math.PI / 180 * angle)
+    ctx.rotate(Math.toRadians(angle))
 
-
-    ctx.strokeStyle = if (collision) "red" else "black"
-
+    ctx.strokeStyle = if (collision || destroyed) "red" else "black"
 
     // draw shape
     ctx.moveTo(h/2, 0)
@@ -65,34 +64,31 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
     ctx.strokeStyle = "black"
   }
 
-  def step(): Unit = {
-    pilot.drive()
+  def step(): Unit = destroyed match {
+    case false =>
+      pilot.drive()
 
-    val ds = speed * maxSpeed / 100
-    val rad = angle * Math.PI / 180
+      val ds: Double = speed.toDouble * maxSpeed / 100
+      val rad = Math.toRadians(angle)
+      println(angle)
 
-    angle += rotation * maxRotation / 100
-    angle %= 360
-    x += (Math.cos(rad) * ds).toInt
-    y += (Math.sin(rad) * ds).toInt
+      angle = (angle + rotation * maxRotation / 100) % 360
+      x += Math.cos(rad) * ds
+      y += Math.sin(rad) * ds
 
-    if (space.outOfSpace(this)) {
-      // TODO: destroy
-      x -= (Math.cos(rad) * ds).toInt
-      y -= (Math.sin(rad) * ds).toInt
-      angle += 180
-      angle %= 360
-    }
+      if (space.outOfSpace(this))
+        destroyed = true
+      else
+        collision = space.checkCollisions(this)
 
-    collision = space.checkCollisions(this)
-
+    case true =>
   }
 
   override def toString = {
     s"Rocket($x:$y:$angle)"
   }
 
-  override def position: (Int, Int) = (x, y)
+  override def position: (Double, Double) = (x, y)
 
   // TODO: calculate dimensions according angle
   override def dimensions: (Int, Int) = (h, h)
