@@ -1,6 +1,8 @@
-package hackit.game
+package hackit.game.pilot
 
-abstract class Pilot() {
+import hackit.game.Control
+
+abstract class Pilot {
   protected var control: Option[Control] = None
 
   def setControl(control: Control): Unit = {

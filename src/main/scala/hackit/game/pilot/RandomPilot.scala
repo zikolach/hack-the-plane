@@ -1,8 +1,8 @@
-package hackit.game
+package hackit.game.pilot
 
 import scala.util.Random
 
-class RandomPilot() extends Pilot {
+class RandomPilot extends Pilot {
   var rotation: Int = 0
   var speed: Int = 0
 

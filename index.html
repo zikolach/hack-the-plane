@@ -21,6 +21,10 @@
               <block type="logic_operation"></block>
               <block type="logic_boolean"></block>
             </category>
+            <category name="Rocket">
+              <block type="set_speed"></block>
+              <block type="set_rotation"></block>
+            </category>
           </xml>
           <div id="blocklyDiv" style="height: 500px; width: 500px;"></div>
         </td>
@@ -28,6 +32,7 @@
     </table>
 
 
+    <button id="click-to-clear" type="button">Clear!</button>
     <button id="click-to-code" type="button">Code!</button>
     <pre id="code"></pre>
 
@@ -36,6 +41,50 @@
     <script type="text/javascript" src="./blocks_compressed.js"></script>
     <script type="text/javascript" src="msg/js/en.js"></script>
     <script type="text/javascript" src="javascript_compressed.js"></script>
+    <!-- Include custom blocks -->
+    <script>
+      Blockly.Blocks['set_speed'] = {
+        init: function() {
+          this.setHelpUrl('http://www.example.com/');
+          this.setColour(20);
+          this.appendDummyInput()
+                  .appendField("speed")
+                  .appendField(new Blockly.FieldTextInput("0"), "SPEED");
+          this.setPreviousStatement(true);
+          this.setNextStatement(true);
+          this.setTooltip('');
+        }
+      };
+
+      Blockly.JavaScript['set_speed'] = function(block) {
+        var text_speed = block.getFieldValue('SPEED');
+        // TODO: Assemble JavaScript into code variable.
+        var code = '';
+        code = code + 'this.setSpeed(' + text_speed + ');';
+        return code;
+      };
+
+      Blockly.Blocks['set_rotation'] = {
+        init: function() {
+          this.setHelpUrl('http://www.example.com/');
+          this.setColour(20);
+          this.appendDummyInput()
+                  .appendField("angle")
+                  .appendField(new Blockly.FieldTextInput("0"), "ANGLE");
+          this.setPreviousStatement(true);
+          this.setNextStatement(true);
+          this.setTooltip('');
+        }
+      };
+
+      Blockly.JavaScript['set_rotation'] = function(block) {
+        var text_angle = block.getFieldValue('ANGLE');
+        // TODO: Assemble JavaScript into code variable.
+        var code = '';
+        code = code + 'this.setRotation(' + text_angle + ');';
+        return code;
+      };
+    </script>
     <!-- Include Scala.js compiled code -->
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-jsdeps.js"></script>
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-fastopt.js"></script>

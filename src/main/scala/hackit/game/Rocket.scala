@@ -1,6 +1,7 @@
 package hackit.game
 
 import hackit.CollisionSpace
+import hackit.game.pilot.Pilot
 import org.scalajs.dom.CanvasRenderingContext2D
 
 class Rocket(val pilot: Pilot, val space: CollisionSpace) extends Control with SpaceObject {

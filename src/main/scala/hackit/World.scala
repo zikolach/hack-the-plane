@@ -1,6 +1,7 @@
 package hackit
 
-import hackit.game.{SpaceObject, Pilot, Rocket}
+import hackit.game.pilot.Pilot
+import hackit.game.{SpaceObject, Rocket}
 import org.scalajs.dom.{CanvasRenderingContext2D, HTMLCanvasElement}
 import org.scalajs.jquery.jQuery
 
@@ -38,4 +39,9 @@ class World(canvasId: String) extends CollisionSpace {
   override def spaceObjects: List[SpaceObject] = rockets
 
   override def spaceRect: (Int, Int, Int, Int) = (0, 0, canvas.width, canvas.height)
+
+  def destroyRockets(): Unit = {
+    rockets = List.empty
+  }
+
 }

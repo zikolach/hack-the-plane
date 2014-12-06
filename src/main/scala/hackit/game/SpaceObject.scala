@@ -1,5 +1,7 @@
 package hackit.game
 
+import scala.scalajs.js
+
 trait SpaceObject {
   def detectCollision(anotherObject: SpaceObject): Boolean = {
     val dp1 = Math.abs(position._1 - anotherObject.position._1)
