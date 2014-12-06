@@ -73,6 +73,7 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
       println(angle)
 
       angle = (angle + rotation * maxRotation / 100) % 360
+      if (angle < 0) angle = 360 - angle
       x += Math.cos(rad) * ds
       y += Math.sin(rad) * ds
 
@@ -90,8 +91,10 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
 
   override def position: (Double, Double) = (x, y)
 
-  // TODO: calculate dimensions according angle
-  override def dimensions: (Int, Int) = (h, h)
+  override def dimensions: (Int, Int) = {
+    // TODO: calculate dimensions according angle
+    (h, h)
+  }
 
   override def getDistance: Int = space.distanceToObject(this)
 
