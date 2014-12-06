@@ -1,6 +1,4 @@
-package hackit
-
-import hackit.game.SpaceObject
+package hackit.game.space
 
 trait CollisionSpace {
 
@@ -23,14 +21,12 @@ trait CollisionSpace {
     // TODO: add rockets
 
     // distance to borders
-    val (x, y, w, h, a) = (
+    val (x, y, angle) = (
       spaceObject.position._1,
       spaceObject.position._2,
-      spaceObject.dimensions._1,
-      spaceObject.dimensions._2,
       spaceObject.orientation)
-    val rad = Math.toRadians(a)
-    val dist = a match {
+    val rad = Math.toRadians(angle)
+    val dist = angle match {
       case a if a >= 0 && a < 90 =>
         Math.min(
           Math.abs(spaceRect._3 - x) / Math.cos(rad).abs,

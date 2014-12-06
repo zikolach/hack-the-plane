@@ -3,39 +3,55 @@
   <head>
     <meta charset="UTF-8">
     <title>The Scala.js Tutorial</title>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
+    <style>
+      .container {
+        height: 500px;
+        width: 500px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 0;
+        margin: 0;
+      }
+      #blocklyDiv {
+        height: 498px;
+        width: 500px;
+      }
+      canvas {
+
+      }
+    </style>
   </head>
   <body>
-    <table>
-      <tr>
-        <td>
-          <canvas id="scene" width="500" height="500"></canvas>
-        </td>
-        <td>
-          <xml id="toolbox" style="display: none">
-            <category name="Control">
-              <block type="controls_if"></block>
-              <block type="controls_whileUntil"></block>
-            </category>
-            <category name="Logic">
-              <block type="logic_compare"></block>
-              <block type="logic_operation"></block>
-              <block type="logic_boolean"></block>
-              <block type="math_number"></block>
-            </category>
-            <category name="Rocket">
-              <block type="set_speed"></block>
-              <block type="set_rotation"></block>
-              <block type="distance"></block>
-            </category>
-          </xml>
-          <div id="blocklyDiv" style="height: 500px; width: 500px;"></div>
-        </td>
-      </tr>
-    </table>
+    <xml id="toolbox" style="display: none">
+      <category name="Control">
+        <block type="controls_if"></block>
+        <block type="controls_whileUntil"></block>
+      </category>
+      <category name="Logic">
+        <block type="logic_compare"></block>
+        <block type="logic_operation"></block>
+        <block type="logic_boolean"></block>
+        <block type="math_number"></block>
+      </category>
+      <category name="Rocket">
+        <block type="set_speed"></block>
+        <block type="set_rotation"></block>
+        <block type="distance"></block>
+      </category>
+    </xml>
 
+    <div class="container">
+        <canvas id="scene" width="500" height="500"></canvas>
+    </div>
+    <div class="container">
+        <div id="blocklyDiv"></div>
+    </div>
 
-    <button id="click-to-clear" type="button">Clear!</button>
-    <button id="click-to-code" type="button">Code!</button>
+    <div>
+      <button id="click-to-clear" type="button">Clear</button>
+      <button id="click-to-code" type="button">Start</button>
+    </div>
     <pre id="code"></pre>
 
     <!-- Include Blockly code -->

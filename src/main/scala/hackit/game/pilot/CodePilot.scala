@@ -1,7 +1,5 @@
 package hackit.game.pilot
 
-import hackit.game.Controllable
-
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 

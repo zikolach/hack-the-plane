@@ -15,17 +15,16 @@ object App extends JSApp {
     Blockly.inject(jQuery("#blocklyDiv")(0), js.Dynamic.literal(
       "toolbox" -> jQuery("#toolbox")(0)
     ))
-    println(Blockly.Blocks.size)
     jQuery("#click-to-code").click(printCode _)
     jQuery("#click-to-clear").click(clear _)
   }
 
   def setupWorld(): Unit = {
     w = new World("scene")
-    for (i <- 1 to 2) {
-      val r = w.addRocket(new RandomPilot())
+    for (i <- 1 to 20) {
+      w.addRocket(new RandomPilot())
     }
-    val timer = setInterval(render _, 1000 / 30)
+    setInterval(render _, 1000 / 30)
   }
 
   def printCode(): Unit = {

@@ -1,6 +1,4 @@
-package hackit.game
-
-import scala.scalajs.js
+package hackit.game.space
 
 trait SpaceObject {
   def detectCollision(anotherObject: SpaceObject): Boolean = {

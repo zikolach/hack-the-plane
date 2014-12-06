@@ -1,7 +1,8 @@
 package hackit
 
 import hackit.game.pilot.Pilot
-import hackit.game.{SpaceObject, Rocket}
+import hackit.game.space.rocket.Rocket
+import hackit.game.space.{CollisionSpace, SpaceObject}
 import org.scalajs.dom.{CanvasRenderingContext2D, HTMLCanvasElement}
 import org.scalajs.jquery.jQuery
 

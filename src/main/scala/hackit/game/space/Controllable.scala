@@ -1,4 +1,4 @@
-package hackit.game
+package hackit.game.space
 
 trait Controllable {
   def setSpeed(speed: Int): Boolean

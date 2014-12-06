@@ -1,12 +1,12 @@
-package hackit.game
+package hackit.game.space.rocket
 
-import hackit.CollisionSpace
 import hackit.game.pilot.Pilot
+import hackit.game.space.{CollisionSpace, Controllable, Sensible, SpaceObject}
 import org.scalajs.dom.CanvasRenderingContext2D
 
 class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject with Controllable with Sensible  {
 
-  val maxSpeed = 20
+  val maxSpeed = 5
   val maxRotation = 10
   val (w, h) = (20, 30)
 
@@ -70,7 +70,6 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
 
       val ds: Double = speed.toDouble * maxSpeed / 100
       val rad = Math.toRadians(angle)
-      println(angle)
 
       angle = (angle + rotation * maxRotation / 100) % 360
       if (angle < 0) angle = 360 - angle

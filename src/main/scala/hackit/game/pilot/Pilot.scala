@@ -1,6 +1,6 @@
 package hackit.game.pilot
 
-import hackit.game.{Sensible, Controllable}
+import hackit.game.space.{Sensible, Controllable}
 
 abstract class Pilot {
   protected var control: Option[Controllable with Sensible] = None
