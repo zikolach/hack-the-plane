@@ -5,14 +5,41 @@
     <title>The Scala.js Tutorial</title>
   </head>
   <body>
+    <table>
+      <tr>
+        <td>
+          <canvas id="scene" width="500" height="500"></canvas>
+        </td>
+        <td>
+          <xml id="toolbox" style="display: none">
+            <category name="Control">
+              <block type="controls_if"></block>
+              <block type="controls_whileUntil"></block>
+            </category>
+            <category name="Logic">
+              <block type="logic_compare"></block>
+              <block type="logic_operation"></block>
+              <block type="logic_boolean"></block>
+            </category>
+          </xml>
+          <div id="blocklyDiv" style="height: 500px; width: 500px;"></div>
+        </td>
+      </tr>
+    </table>
 
-    <button id="click-me-button" type="button">Click me!</button>
 
-    <canvas id="scene" width="500" height="300"></canvas>
+    <button id="click-to-code" type="button">Code!</button>
+    <pre id="code"></pre>
 
+    <!-- Include Blockly code -->
+    <script type="text/javascript" src="./blockly_compressed.js"></script>
+    <script type="text/javascript" src="./blocks_compressed.js"></script>
+    <script type="text/javascript" src="msg/js/en.js"></script>
+    <script type="text/javascript" src="javascript_compressed.js"></script>
     <!-- Include Scala.js compiled code -->
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-jsdeps.js"></script>
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-fastopt.js"></script>
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-launcher.js"></script>
+
   </body>
 </html>

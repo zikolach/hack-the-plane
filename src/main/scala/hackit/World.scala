@@ -1,13 +1,13 @@
 package hackit
 
-import hackit.game.{Pilot, Rocket}
+import hackit.game.{SpaceObject, Pilot, Rocket}
 import org.scalajs.dom.{CanvasRenderingContext2D, HTMLCanvasElement}
 import org.scalajs.jquery.jQuery
 
 import scala.util.Random
 
 
-class World(canvasId: String) {
+class World(canvasId: String) extends CollisionSpace {
 
   private val element = jQuery(s"#$canvasId")(0)
   private val canvas = element.asInstanceOf[HTMLCanvasElement]
@@ -16,7 +16,7 @@ class World(canvasId: String) {
   private var rockets: List[Rocket] = List.empty
 
   def addRocket(pilot: Pilot): Rocket = {
-    rockets ::= new Rocket(Random.nextInt(canvas.width), Random.nextInt(canvas.height), Random.nextInt(360), pilot)
+    rockets ::= new Rocket(Random.nextInt(canvas.width), Random.nextInt(canvas.height), Random.nextInt(360), pilot, this)
     rockets.head
   }
 
@@ -35,4 +35,7 @@ class World(canvasId: String) {
        |)""".stripMargin
   }
 
+  override def spaceObjects: List[SpaceObject] = rockets
+
+  override def spaceRect: (Int, Int, Int, Int) = (0, 0, canvas.width, canvas.height)
 }
