@@ -1,10 +1,12 @@
 package hackit
 
-import java.util.Date
+import hackit.game.RandomPilot
 
 import scala.scalajs.js.JSApp
 import org.scalajs.jquery.jQuery
 import org.scalajs.dom._
+
+import scala.util.Random
 
 
 object App extends JSApp {
@@ -30,8 +32,14 @@ object App extends JSApp {
   def main(): Unit = {
     jQuery(setupUI _)
     w = new World("scene")
+    for (i <- 1 to 10) {
+      val r = w.addRocket(new RandomPilot())
+      r.setRotation(Random.nextInt(200) - 100)
+      r.setSpeed(20)
+    }
+    println(w)
     w.drawScene()
-    val timer = setInterval(render _, 100)
+    val timer = setInterval(render _, 1000 / 30)
     println(timer)
   }
 }
