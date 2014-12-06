@@ -1,8 +1,6 @@
 package hackit.game
 
-import scala.scalajs.js
-
-trait Control {
+trait Controllable {
   def setSpeed(speed: Int): Boolean
   def setRotation(rotation: Int): Boolean
 }

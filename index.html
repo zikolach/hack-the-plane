@@ -20,10 +20,12 @@
               <block type="logic_compare"></block>
               <block type="logic_operation"></block>
               <block type="logic_boolean"></block>
+              <block type="math_number"></block>
             </category>
             <category name="Rocket">
               <block type="set_speed"></block>
               <block type="set_rotation"></block>
+              <block type="distance"></block>
             </category>
           </xml>
           <div id="blocklyDiv" style="height: 500px; width: 500px;"></div>
@@ -84,6 +86,25 @@
         code = code + 'this.setRotation(' + text_angle + ');';
         return code;
       };
+
+      Blockly.Blocks['distance'] = {
+        init: function() {
+          this.setHelpUrl('http://www.example.com/');
+          this.setColour(20);
+          this.appendDummyInput()
+                  .appendField("distance");
+          this.setOutput(true, "Number");
+          this.setTooltip('');
+        }
+      };
+
+      Blockly.JavaScript['distance'] = function(block) {
+        // TODO: Assemble JavaScript into code variable.
+        var code = 'this.getDistance()';
+        // TODO: Change ORDER_NONE to the correct strength.
+        return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
     </script>
     <!-- Include Scala.js compiled code -->
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-jsdeps.js"></script>

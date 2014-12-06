@@ -1,13 +1,15 @@
 package hackit.game.pilot
 
-import hackit.game.Control
+import hackit.game.Controllable
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 
 class CodePilot(code: String) extends Pilot {
+
   override def drive(): Unit = {
-    control.foreach(runCode)
+    val f = new js.Function(code)
+    f.call(this.asInstanceOf[js.Object])
   }
 
   @JSExport
@@ -20,10 +22,7 @@ class CodePilot(code: String) extends Pilot {
     control.foreach(_.setRotation(angle))
   }
 
-  def runCode(ctrl: Control): Unit = {
-    val f = new js.Function(code)
-    f.call(this.asInstanceOf[js.Object])
-//    f.call(ctrl.asInstanceOf[js.Object])
-//    js.eval(code)
-  }
+  @JSExport
+  def getDistance(): Int = control.map(_.getDistance).getOrElse(0)
+
 }

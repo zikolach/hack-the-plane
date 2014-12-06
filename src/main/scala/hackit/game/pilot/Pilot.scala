@@ -1,11 +1,11 @@
 package hackit.game.pilot
 
-import hackit.game.Control
+import hackit.game.{Sensible, Controllable}
 
 abstract class Pilot {
-  protected var control: Option[Control] = None
+  protected var control: Option[Controllable with Sensible] = None
 
-  def setControl(control: Control): Unit = {
+  def setControl(control: Controllable with Sensible): Unit = {
     this.control = Some(control)
   }
 

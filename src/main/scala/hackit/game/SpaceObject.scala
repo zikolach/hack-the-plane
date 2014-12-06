@@ -12,4 +12,5 @@ trait SpaceObject {
   }
   def position: (Int, Int)
   def dimensions: (Int, Int)
+  def orientation: Double
 }

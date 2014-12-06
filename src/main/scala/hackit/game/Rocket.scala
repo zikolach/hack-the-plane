@@ -4,7 +4,7 @@ import hackit.CollisionSpace
 import hackit.game.pilot.Pilot
 import org.scalajs.dom.CanvasRenderingContext2D
 
-class Rocket(val pilot: Pilot, val space: CollisionSpace) extends Control with SpaceObject {
+class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject with Controllable with Sensible  {
 
   val maxSpeed = 20
   val maxRotation = 10
@@ -12,7 +12,7 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends Control with S
 
   var x: Int = 0
   var y: Int = 0
-  var angle: Int = 0
+  var angle: Double = 0
 
   var speed: Int = 0 // 0..100%
   var rotation: Int = 0 // -100%..100%
@@ -72,10 +72,12 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends Control with S
     val rad = angle * Math.PI / 180
 
     angle += rotation * maxRotation / 100
+    angle %= 360
     x += (Math.cos(rad) * ds).toInt
     y += (Math.sin(rad) * ds).toInt
 
     if (space.outOfSpace(this)) {
+      // TODO: destroy
       x -= (Math.cos(rad) * ds).toInt
       y -= (Math.sin(rad) * ds).toInt
       angle += 180
@@ -94,4 +96,8 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends Control with S
 
   // TODO: calculate dimensions according angle
   override def dimensions: (Int, Int) = (h, h)
+
+  override def getDistance: Int = space.distanceToObject(this)
+
+  override def orientation: Double = angle
 }
