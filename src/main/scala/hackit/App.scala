@@ -33,6 +33,9 @@ object App extends JSApp {
     w.addRocket(new CodePilot(code))
   }
 
+
+
+
   def clear(): Unit = {
     w.destroyRockets()
   }

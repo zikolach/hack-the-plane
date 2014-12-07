@@ -19,8 +19,8 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
   var y: Double = 0
   var angle: Double = 0
 
-  var speed: Int = 0 // 0..100%
-  var rotation: Int = 0 // -100%..100%
+  var speed: Double = 0 // 0..100%
+  var rotation: Double = 0 // -100%..100%
 
   var collision: Boolean = false
   var destroyed: Boolean = false
@@ -33,14 +33,14 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
     pilot.setControl(this)
   }
 
-  def setSpeed(speed: Int): Boolean = {
+  def setSpeed(speed: Double): Boolean = {
     if (speed >= 0 && speed <= 100) {
       this.speed = speed
       true
     } else false
   }
 
-  def setRotation(rotation: Int): Boolean = {
+  def setRotation(rotation: Double): Boolean = {
     if (rotation >= -100 && rotation <= 100) {
       this.rotation = rotation
       true
@@ -76,7 +76,7 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
       val ds: Double = speed.toDouble * maxSpeed / 100
       val rad = Math.toRadians(angle)
 
-      angle = (angle + rotation * maxRotation / 100) % 360
+      angle = (angle + rotation.toDouble * maxRotation / 100) % 360
       if (angle < 0) angle = 360 - angle
       x += Math.cos(rad) * ds
       y += Math.sin(rad) * ds
@@ -107,6 +107,10 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
   override def sonar: List[UnknownSpaceObject] = space.detectObjectsAt(this, 100)
 
   override def log(text: String): Unit = {
-    jQuery("#log").append(text)
+    val logElt = jQuery("#log")
+    val oldText = logElt.text()
+    logElt.text(s"$text\n$oldText".take(1024))
   }
+
+  override def radar: Option[CourseObject] = space.radar(this, 200)
 }

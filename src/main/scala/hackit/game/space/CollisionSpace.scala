@@ -1,5 +1,7 @@
 package hackit.game.space
 
+import hackit.game.space.rocket.Rocket
+
 trait CollisionSpace {
 
   def spaceObjects: List[SpaceObject]
@@ -14,7 +16,7 @@ trait CollisionSpace {
   def outOfSpace(spaceObject: SpaceObject): Boolean = {
     val (x, y, w, h) = (spaceObject.position._1, spaceObject.position._2, spaceObject.dimensions._1, spaceObject.dimensions._2)
     val sr = spaceRect
-    x - w/2 <= sr._1 || x + w/2 >= sr._3 || y - h/2 <= sr._2 || y + h/2 >= sr._4
+    x - w / 2 <= sr._1 || x + w / 2 >= sr._3 || y - h / 2 <= sr._2 || y + h / 2 >= sr._4
   }
 
   def distanceToObject(spaceObject: SpaceObject): Int = {
@@ -52,11 +54,25 @@ trait CollisionSpace {
     dist.toInt
   }
 
-  def detectObjectsAt(spaceObject: SpaceObject, distance: Int): List[UnknownSpaceObject] =
+  def detectObjectsAt(spaceObject: SpaceObject, maxDistance: Int): List[UnknownSpaceObject] =
     spaceObjects.filter(otherObject => {
       otherObject != spaceObject &&
-      Math.sqrt(Math.pow(spaceObject.position._1 - otherObject.position._1, 2) +
-        Math.pow(spaceObject.position._2 - otherObject.position._2, 2)) <= distance
+        distance(spaceObject.position._1, otherObject.position._1, spaceObject.position._2, otherObject.position._2) <= maxDistance
     }).map(obj => UnknownSpaceObject(obj.position._1, obj.position._2, Math.max(obj.dimensions._1, obj.dimensions._2), obj.orientation))
+
+  def radar(obj: SpaceObject, maxDistance: Double): Option[CourseObject] = {
+    spaceObjects
+      .filterNot(_ == obj)
+      .map(so => (so, distance(obj.position._1, so.position._1, obj.position._2, so.position._2)))
+      .filter(_._2 <= maxDistance)
+      .sortBy(_._2)
+      .headOption
+      .map(no => CourseObject(angleDiff(no._1.orientation, obj.orientation), no._2))
+  }
+
+  private def distance(x1: Double, y1: Double, x2: Double, y2: Double): Double =
+    Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
+
+  private def angleDiff(a1: Double, a2: Double): Double = a2 - a1
 
 }

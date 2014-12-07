@@ -13,12 +13,12 @@ class CodePilot(code: String) extends Pilot {
   }
 
   @JSExport
-  def setSpeed(speed: Int): Unit = {
+  def setSpeed(speed: Double): Unit = {
     control.foreach(_.setSpeed(speed))
   }
 
   @JSExport
-  def setRotation(angle: Int): Unit = {
+  def setRotation(angle: Double): Unit = {
     control.foreach(_.setRotation(angle))
   }
 
@@ -30,7 +30,13 @@ class CodePilot(code: String) extends Pilot {
 
   @JSExport
   def log(text: js.Any): Unit = {
-    control.map(_.log(text.toString))
+    control.map(_.log(if (text != null) text.toString else ""))
+  }
+
+  @JSExport
+  def radar(): js.Object = control.flatMap(_.radar) match {
+    case Some(obj) => obj.asInstanceOf[js.Object]
+    case None => null
   }
 
 }

@@ -1,6 +1,6 @@
 package hackit.game.space
 
 trait Controllable {
-  def setSpeed(speed: Int): Boolean
-  def setRotation(rotation: Int): Boolean
+  def setSpeed(speed: Double): Boolean
+  def setRotation(rotation: Double): Boolean
 }

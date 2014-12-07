@@ -28,16 +28,31 @@
         <block type="logic_compare"></block>
         <block type="logic_operation"></block>
         <block type="logic_boolean"></block>
-        <block type="math_number"></block>
       </category>
       <category name="Variables" custom="VARIABLE"></category>
       <category name="Functions" custom="PROCEDURE"></category>
       <category name="Rocket">
-        <block type="set_speed"></block>
-        <block type="set_rotation"></block>
-        <block type="distance"></block>
-        <block type="sonar"></block>
-        <block type="log"></block>
+        <block type="speed">
+          <value name="SPEED">
+            <block type="math_number">
+              <field name="NUM">20</field>
+            </block>
+          </value>
+        </block>
+        <block type="rotate">
+          <value name="ANGLE">
+            <block type="math_number">
+              <field name="NUM">20</field>
+            </block>
+          </value>
+        </block>
+        <!--<block type="distance"></block>-->
+        <block type="radar_distance"></block>
+        <block type="radar_angle"></block>
+        <!--<block type="log"></block>-->
+      </category>
+      <category name="Custom">
+        <block type="math_number"></block>
       </category>
     </xml>
 
@@ -65,102 +80,7 @@
     <script type="text/javascript" src="msg/js/en.js"></script>
     <script type="text/javascript" src="javascript_compressed.js"></script>
     <!-- Include custom blocks -->
-    <script>
-      Blockly.Blocks['set_speed'] = {
-        init: function() {
-          this.setHelpUrl('http://www.example.com/');
-          this.setColour(20);
-          this.appendDummyInput()
-                  .appendField("speed")
-                  .appendField(new Blockly.FieldTextInput("0"), "SPEED");
-          this.setPreviousStatement(true);
-          this.setNextStatement(true);
-          this.setTooltip('');
-        }
-      };
-
-      Blockly.JavaScript['set_speed'] = function(block) {
-        var text_speed = block.getFieldValue('SPEED');
-        // TODO: Assemble JavaScript into code variable.
-        var code = '';
-        code = code + 'this.setSpeed(' + text_speed + ');';
-        return code;
-      };
-
-      Blockly.Blocks['set_rotation'] = {
-        init: function() {
-          this.setHelpUrl('http://www.example.com/');
-          this.setColour(20);
-          this.appendDummyInput()
-                  .appendField("angle")
-                  .appendField(new Blockly.FieldTextInput("0"), "ANGLE");
-          this.setPreviousStatement(true);
-          this.setNextStatement(true);
-          this.setTooltip('');
-        }
-      };
-
-      Blockly.JavaScript['set_rotation'] = function(block) {
-        var text_angle = block.getFieldValue('ANGLE');
-        // TODO: Assemble JavaScript into code variable.
-        var code = '';
-        code = code + 'this.setRotation(' + text_angle + ');';
-        return code;
-      };
-
-      Blockly.Blocks['distance'] = {
-        init: function() {
-          this.setHelpUrl('http://www.example.com/');
-          this.setColour(20);
-          this.appendDummyInput()
-                  .appendField("distance");
-          this.setOutput(true, "Number");
-          this.setTooltip('');
-        }
-      };
-
-      Blockly.JavaScript['distance'] = function(block) {
-        var code = 'this.getDistance()';
-        return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.Blocks['sonar'] = {
-        init: function() {
-          this.setHelpUrl('http://www.example.com/');
-          this.setColour(20);
-          this.appendDummyInput()
-                  .appendField("sonar");
-          this.setOutput(true, "Array");
-          this.setTooltip('');
-        }
-      };
-
-      Blockly.JavaScript['sonar'] = function(block) {
-        var code = 'this.sonar()';
-        return [code, Blockly.JavaScript.ORDER_NONE];
-      };
-
-      Blockly.Blocks['log'] = {
-        init: function() {
-          this.setHelpUrl('http://www.example.com/');
-          this.setColour(290);
-          this.appendValueInput("TEXT")
-                  .setCheck("Array")
-                  .appendField("log");
-          this.setPreviousStatement(true);
-          this.setNextStatement(true);
-          this.setTooltip('');
-        }
-      };
-
-      Blockly.JavaScript['log'] = function(block) {
-        var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
-        // TODO: Assemble JavaScript into code variable.
-        var code = 'this.log(' + value_text + ');';
-        return code;
-      };
-
-    </script>
+    <script type="text/javascript" src="custom_blocks.js"></script>
     <!-- Include Scala.js compiled code -->
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-jsdeps.js"></script>
     <script type="text/javascript" src="./target/scala-2.11/scala-js-hackit-tutorial-fastopt.js"></script>
