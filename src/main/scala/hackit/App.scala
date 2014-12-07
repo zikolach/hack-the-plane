@@ -17,6 +17,8 @@ object App extends JSApp {
     ))
     jQuery("#click-to-code").click(printCode _)
     jQuery("#click-to-clear").click(clear _)
+    jQuery("#click-to-save").click(saveWorkspace _)
+    jQuery("#click-to-load").click(loadWorkspace _)
   }
 
   def setupWorld(): Unit = {
@@ -33,8 +35,19 @@ object App extends JSApp {
     w.addRocket(new CodePilot(code))
   }
 
+  def saveWorkspace(): Unit = {
+    val xml = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace)
+    val str = Blockly.Xml.domToText(xml)
+    localStorage.setItem("data", str)
+    println("Workspace saved")
+  }
 
-
+  def loadWorkspace(): Unit = {
+    val str = localStorage.getItem("data")
+    val xml = Blockly.Xml.textToDom(str)
+    Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, xml)
+    println("Workspace restored")
+  }
 
   def clear(): Unit = {
     w.destroyRockets()
