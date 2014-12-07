@@ -5,20 +5,86 @@
     <title>The Scala.js Tutorial</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
     <style>
-      .container {
+      canvas#scene {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+      #blocklyDiv {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        left: auto;
+        bottom: auto;
         width: 500px;
-        display: inline-block;
+        height: 400px;
         vertical-align: top;
         padding: 0;
         margin: 0;
       }
-      #blocklyDiv {
-        height: 498px;
+      #buttons {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: auto;
+        bottom: auto;
+        background-color:rgba(0,0,0,0.0);
+        padding: 5px;
+      }
+      #log {
+        position: fixed;
+        padding: 5px;
+        top: auto;
+        left: 20px;
+        right: auto;
+        bottom: 20px;
+        width: 300px;
+        height: 150px;
+        background-color:rgba(0,0,0,0.5);
+        color: #ffffff;
+        display: block;
+        font-size: small;
+      }
+      #code {
+        position: fixed;
+        padding: 5px;
+        top: auto;
+        left: auto;
+        right: 20px;
+        bottom: 20px;
         width: 500px;
+        height: 150px;
+        background-color:rgba(0,0,0,0.5);
+        color: #ffffff;
+        display: block;
+        font-size: small;
+      }
+      .hidden {
+        display: none !important;
+      }
+      #plane {
+        display: none;
+      }
+      button {
+        -webkit-box-shadow: 0px 1px 3px #666666;
+        -moz-box-shadow: 0px 1px 3px #666666;
+        box-shadow: 0px 1px 3px #666666;
+        color: #ffffff;
+        background: #000000;
+        padding: 6px 15px 6px 15px;
+        text-decoration: none;
+        font-size: small;
+      }
+
+      button:hover {
+        background: #7290a3;
+        text-decoration: none;
       }
     </style>
   </head>
   <body>
+    <canvas id="scene" ></canvas>
+
     <xml id="toolbox" style="display: none">
       <category name="Control">
         <block type="controls_if"></block>
@@ -31,7 +97,7 @@
       </category>
       <category name="Variables" custom="VARIABLE"></category>
       <category name="Functions" custom="PROCEDURE"></category>
-      <category name="Rocket">
+      <category name="Plane">
         <block type="speed">
           <value name="SPEED">
             <block type="math_number">
@@ -57,27 +123,25 @@
       </category>
     </xml>
 
-    <div class="container">
-        <canvas id="scene" width="500" height="500"></canvas>
-    </div>
-    <div class="container">
-        <div id="blocklyDiv"></div>
-    </div>
+    <div id="blocklyDiv"></div>
 
-    <div>
-      <button id="click-to-clear" type="button">Clear</button>
+
+    <div id="buttons">
       <button id="click-to-code" type="button">Start</button>
       <button id="click-to-save" type="button">Save</button>
       <button id="click-to-load" type="button">Load</button>
-    </div>
-    <div class="container">
-      <pre id="code"></pre>
-    </div>
-    <div class="container">
-      <pre id="log"></pre>
+      <button id="toggle-blockly" type="button">Code</button>
+      <button id="toggle-log" type="button">Log</button>
+      <button id="click-to-clear" type="button">Clear</button>
     </div>
 
-    <img id="plane" src="plane.png" style="display: none;"/>
+    <pre id="code"></pre>
+
+
+    <pre id="log"></pre>
+
+
+    <img id="plane" src="plane.png"/>
 
     <!-- Include Blockly code -->
     <script type="text/javascript" src="./blockly_compressed.js"></script>

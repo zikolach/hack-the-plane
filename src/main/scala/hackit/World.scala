@@ -14,6 +14,8 @@ class World(canvasId: String) extends CollisionSpace {
   private val element = jQuery(s"#$canvasId")(0)
   private val canvas = element.asInstanceOf[HTMLCanvasElement]
   private val ctx = canvas.getContext("2d").asInstanceOf[CanvasRenderingContext2D]
+  canvas.width = org.scalajs.dom.window.innerWidth
+  canvas.height = org.scalajs.dom.window.innerHeight
 
   private var rockets: List[Rocket] = List.empty
 
@@ -28,7 +30,8 @@ class World(canvasId: String) extends CollisionSpace {
   }
 
   def drawScene(): Unit = {
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = "#81c4f7"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctx.strokeRect(0, 0, canvas.width, canvas.height)
     rockets.foreach(rocket => {
       rocket.step()

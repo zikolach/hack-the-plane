@@ -11,7 +11,8 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
   with Sensible
   with Loggable {
 
-  val maxSpeed = 5
+  val minSpeed = 2
+  val maxSpeed = 7
   val maxRotation = 10
   val (w, h) = (40, 40)
 
@@ -58,7 +59,7 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
     ctx.strokeStyle = if (collision || destroyed) "red" else "black"
 
     // draw shape
-//    ctx.moveTo(h/2, 0)
+    // ctx.moveTo(h/2, 0)
     if (collision) {
       ctx.beginPath()
       ctx.arc(0, 0, w / 2, 0, 2 * Math.PI)
@@ -81,7 +82,7 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
     case false =>
       pilot.drive()
 
-      val ds: Double = speed * maxSpeed / 100
+      val ds: Double = speed * (maxSpeed - minSpeed) / 100 + minSpeed
       val rad = Math.toRadians(angle)
 
       angle = (angle + rotation * maxRotation / 100) % 360
