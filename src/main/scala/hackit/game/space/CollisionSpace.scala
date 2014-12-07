@@ -63,16 +63,23 @@ trait CollisionSpace {
   def radar(obj: SpaceObject, maxDistance: Double): Option[CourseObject] = {
     spaceObjects
       .filterNot(_ == obj)
-      .map(so => (so, distance(obj.position._1, so.position._1, obj.position._2, so.position._2)))
-      .filter(_._2 <= maxDistance)
+      .map(so => (so, distance(obj.position._1, obj.position._2, so.position._1, so.position._2)))
+//      .filter(_._2 <= maxDistance)
       .sortBy(_._2)
       .headOption
-      .map(no => CourseObject(angleDiff(no._1.orientation, obj.orientation), no._2))
+      .map(no => CourseObject(
+        angle = angleDiff(obj.orientation, angle(obj.position._1, obj.position._2, no._1.position._1, no._1.position._2)),
+        distance = no._2)
+      )
   }
+
+  private def angle(x1: Double, y1: Double, x2: Double, y2: Double): Double =
+    Math.toDegrees(Math.atan2(y2 - y1, x2 - x1))
 
   private def distance(x1: Double, y1: Double, x2: Double, y2: Double): Double =
     Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2))
 
-  private def angleDiff(a1: Double, a2: Double): Double = a2 - a1
+  private def angleDiff(a1: Double, a2: Double): Double =
+    (a2 - a1) % 360
 
 }
