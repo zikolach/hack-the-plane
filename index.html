@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.css">
     <style>
       .container {
-        height: 500px;
         width: 500px;
         display: inline-block;
         vertical-align: top;
@@ -16,9 +15,6 @@
       #blocklyDiv {
         height: 498px;
         width: 500px;
-      }
-      canvas {
-
       }
     </style>
   </head>
@@ -34,10 +30,14 @@
         <block type="logic_boolean"></block>
         <block type="math_number"></block>
       </category>
+      <category name="Variables" custom="VARIABLE"></category>
+      <category name="Functions" custom="PROCEDURE"></category>
       <category name="Rocket">
         <block type="set_speed"></block>
         <block type="set_rotation"></block>
         <block type="distance"></block>
+        <block type="sonar"></block>
+        <block type="log"></block>
       </category>
     </xml>
 
@@ -52,7 +52,12 @@
       <button id="click-to-clear" type="button">Clear</button>
       <button id="click-to-code" type="button">Start</button>
     </div>
-    <pre id="code"></pre>
+    <div class="container">
+      <pre id="code"></pre>
+    </div>
+    <div class="container">
+      <pre id="log"></pre>
+    </div>
 
     <!-- Include Blockly code -->
     <script type="text/javascript" src="./blockly_compressed.js"></script>
@@ -115,10 +120,44 @@
       };
 
       Blockly.JavaScript['distance'] = function(block) {
-        // TODO: Assemble JavaScript into code variable.
         var code = 'this.getDistance()';
-        // TODO: Change ORDER_NONE to the correct strength.
         return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.Blocks['sonar'] = {
+        init: function() {
+          this.setHelpUrl('http://www.example.com/');
+          this.setColour(20);
+          this.appendDummyInput()
+                  .appendField("sonar");
+          this.setOutput(true, "Array");
+          this.setTooltip('');
+        }
+      };
+
+      Blockly.JavaScript['sonar'] = function(block) {
+        var code = 'this.sonar()';
+        return [code, Blockly.JavaScript.ORDER_NONE];
+      };
+
+      Blockly.Blocks['log'] = {
+        init: function() {
+          this.setHelpUrl('http://www.example.com/');
+          this.setColour(290);
+          this.appendValueInput("TEXT")
+                  .setCheck("Array")
+                  .appendField("log");
+          this.setPreviousStatement(true);
+          this.setNextStatement(true);
+          this.setTooltip('');
+        }
+      };
+
+      Blockly.JavaScript['log'] = function(block) {
+        var value_text = Blockly.JavaScript.valueToCode(block, 'TEXT', Blockly.JavaScript.ORDER_ATOMIC);
+        // TODO: Assemble JavaScript into code variable.
+        var code = 'this.log(' + value_text + ');';
+        return code;
       };
 
     </script>

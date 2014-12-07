@@ -1,5 +1,7 @@
 package hackit.game.pilot
 
+import hackit.game.space.UnknownSpaceObject
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExport
 
@@ -22,5 +24,13 @@ class CodePilot(code: String) extends Pilot {
 
   @JSExport
   def getDistance(): Int = control.map(_.getDistance).getOrElse(0)
+
+  @JSExport
+  def sonar(): js.Array[js.Object] = control.map(_.sonar).getOrElse(List.empty).asInstanceOf[js.Array[js.Object]]
+
+  @JSExport
+  def log(text: js.Any): Unit = {
+    control.map(_.log(text.toString))
+  }
 
 }

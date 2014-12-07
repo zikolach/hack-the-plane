@@ -1,10 +1,15 @@
 package hackit.game.space.rocket
 
 import hackit.game.pilot.Pilot
-import hackit.game.space.{CollisionSpace, Controllable, Sensible, SpaceObject}
+import hackit.game.space._
 import org.scalajs.dom.CanvasRenderingContext2D
+import org.scalajs.jquery._
 
-class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject with Controllable with Sensible  {
+class Rocket(val pilot: Pilot, val space: CollisionSpace)
+  extends SpaceObject
+  with Controllable
+  with Sensible
+  with Loggable {
 
   val maxSpeed = 5
   val maxRotation = 10
@@ -98,4 +103,10 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace) extends SpaceObject wi
   override def getDistance: Int = space.distanceToObject(this)
 
   override def orientation: Double = angle
+
+  override def sonar: List[UnknownSpaceObject] = space.detectObjectsAt(this, 100)
+
+  override def log(text: String): Unit = {
+    jQuery("#log").append(text)
+  }
 }

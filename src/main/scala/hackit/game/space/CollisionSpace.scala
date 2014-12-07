@@ -52,4 +52,11 @@ trait CollisionSpace {
     dist.toInt
   }
 
+  def detectObjectsAt(spaceObject: SpaceObject, distance: Int): List[UnknownSpaceObject] =
+    spaceObjects.filter(otherObject => {
+      otherObject != spaceObject &&
+      Math.sqrt(Math.pow(spaceObject.position._1 - otherObject.position._1, 2) +
+        Math.pow(spaceObject.position._2 - otherObject.position._2, 2)) <= distance
+    }).map(obj => UnknownSpaceObject(obj.position._1, obj.position._2, Math.max(obj.dimensions._1, obj.dimensions._2), obj.orientation))
+
 }

@@ -12,3 +12,11 @@ trait SpaceObject {
   def dimensions: (Int, Int)
   def orientation: Double
 }
+
+case class UnknownSpaceObject(x: Double, y: Double, r: Int, angle: Double) extends SpaceObject {
+  override def position: (Double, Double) = (x, y)
+
+  override def dimensions: (Int, Int) = (r, r)
+
+  override def orientation: Double = angle
+}
