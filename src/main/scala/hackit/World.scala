@@ -30,7 +30,9 @@ class World(canvasId: String) extends CollisionSpace {
   }
 
   def drawScene(): Unit = {
-    ctx.fillStyle = "#81c4f7"
+//    ctx.fillStyle = "#81c4f7"
+//    ctx.fillStyle = "#a7d8f6"
+    ctx.fillStyle = "#8ecdf4"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctx.strokeRect(0, 0, canvas.width, canvas.height)
     rockets.foreach(rocket => {
