@@ -18,7 +18,12 @@ class World(canvasId: String) extends CollisionSpace {
   private var rockets: List[Rocket] = List.empty
 
   def addRocket(pilot: Pilot): Rocket = {
-    rockets ::= new Rocket(Random.nextInt(canvas.width), Random.nextInt(canvas.height), Random.nextInt(360), pilot, this)
+    rockets ::= new Rocket(
+      x = Random.nextInt(canvas.width - 50) + 25,
+      y = Random.nextInt(canvas.height - 50) + 25,
+      angle = Random.nextInt(360),
+      pilot = pilot,
+      space = this)
     rockets.head
   }
 
@@ -29,7 +34,7 @@ class World(canvasId: String) extends CollisionSpace {
       rocket.step()
       rocket.draw(ctx)
     })
-//    rockets = rockets.filterNot(_.destroyed)
+    rockets = rockets.filterNot(_.destroyed)
   }
 
   override def toString = {

@@ -1,6 +1,6 @@
 scalaJSSettings
 
-name := "Scala.js HackIt Tutorial"
+name := "Scala.js HackIt Rockets"
 
 scalaVersion := "2.11.2"
 

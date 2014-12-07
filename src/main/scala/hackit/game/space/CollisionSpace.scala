@@ -16,7 +16,8 @@ trait CollisionSpace {
   def outOfSpace(spaceObject: SpaceObject): Boolean = {
     val (x, y, w, h) = (spaceObject.position._1, spaceObject.position._2, spaceObject.dimensions._1, spaceObject.dimensions._2)
     val sr = spaceRect
-    x - w / 2 <= sr._1 || x + w / 2 >= sr._3 || y - h / 2 <= sr._2 || y + h / 2 >= sr._4
+//    x - w / 2 <= sr._1 || x + w / 2 >= sr._3 || y - h / 2 <= sr._2 || y + h / 2 >= sr._4
+    x + w / 2 <= sr._1 || x - w / 2 >= sr._3 || y + h / 2 <= sr._2 || y - h / 2 >= sr._4
   }
 
   def distanceToObject(spaceObject: SpaceObject): Int = {

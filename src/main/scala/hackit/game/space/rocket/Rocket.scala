@@ -2,7 +2,7 @@ package hackit.game.space.rocket
 
 import hackit.game.pilot.Pilot
 import hackit.game.space._
-import org.scalajs.dom.CanvasRenderingContext2D
+import org.scalajs.dom.{HTMLElement, CanvasRenderingContext2D}
 import org.scalajs.jquery._
 
 class Rocket(val pilot: Pilot, val space: CollisionSpace)
@@ -13,7 +13,7 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
 
   val maxSpeed = 5
   val maxRotation = 10
-  val (w, h) = (20, 30)
+  val (w, h) = (40, 40)
 
   var x: Double = 0
   var y: Double = 0
@@ -25,12 +25,15 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
   var collision: Boolean = false
   var destroyed: Boolean = false
 
+  var img: HTMLElement = null
+
   def this(x: Int, y: Int, angle: Double, pilot: Pilot, space: CollisionSpace) = {
     this(pilot, space)
     this.x = x
     this.y = y
     this.angle = angle
     pilot.setControl(this)
+    img = jQuery("#plane")(0)
   }
 
   def setSpeed(speed: Double): Boolean = {
@@ -48,7 +51,6 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
   }
 
   def draw(ctx: CanvasRenderingContext2D): Unit = {
-//    val canvas = ctx.canvas
     ctx.setTransform(1, 0, 0, 1, 0, 0)
     ctx.translate(x, y)
     ctx.rotate(Math.toRadians(angle))
@@ -56,13 +58,19 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
     ctx.strokeStyle = if (collision || destroyed) "red" else "black"
 
     // draw shape
-    ctx.moveTo(h/2, 0)
-    ctx.beginPath()
-    ctx.lineTo(-h/2, -w/2)
-    ctx.lineTo(-h/2, w/2)
-    ctx.lineTo(h/2, 0)
-    ctx.closePath()
-    ctx.stroke()
+//    ctx.moveTo(h/2, 0)
+    if (collision) {
+      ctx.beginPath()
+      ctx.arc(0, 0, w / 2, 0, 2 * Math.PI)
+      //    ctx.lineTo(-h/2, -w/2)
+      //    ctx.lineTo(-h/2, w/2)
+      //    ctx.lineTo(h/2, 0)
+      //    ctx.closePath()
+      ctx.lineWidth = 2
+      ctx.stroke()
+    }
+
+    ctx.drawImage(img, 0, 0, 40, 40, -20, -20, 40, 40)
     //
     ctx.translate(-x, -y)
     ctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -73,10 +81,10 @@ class Rocket(val pilot: Pilot, val space: CollisionSpace)
     case false =>
       pilot.drive()
 
-      val ds: Double = speed.toDouble * maxSpeed / 100
+      val ds: Double = speed * maxSpeed / 100
       val rad = Math.toRadians(angle)
 
-      angle = (angle + rotation.toDouble * maxRotation / 100) % 360
+      angle = (angle + rotation * maxRotation / 100) % 360
       if (angle < 0) angle = 360 - angle
       x += Math.cos(rad) * ds
       y += Math.sin(rad) * ds
